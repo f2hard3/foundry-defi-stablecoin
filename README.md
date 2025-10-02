@@ -1,66 +1,74 @@
-## Foundry
+# Foundry DeFi Stablecoin
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+A decentralized stablecoin protocol built with [Foundry](https://github.com/foundry-rs/foundry), featuring robust testing, modular contracts, and Chainlink integration.
 
-Foundry consists of:
+## Project Structure
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+```
+.
+├── src/                # Main Solidity contracts
+├── script/             # Deployment and helper scripts
+├── test/               # Test suite (unit, fuzz, mocks)
+├── lib/                # External dependencies (OpenZeppelin, Chainlink, forge-std)
+├── foundry.toml        # Foundry configuration
+└── README.md           # Project documentation
+```
 
-## Documentation
+## Getting Started
 
-https://book.getfoundry.sh/
+### Prerequisites
 
-## Usage
+- [Foundry](https://book.getfoundry.sh/getting-started/installation)
+- Node.js (optional, for dependency management)
+
+### Installation
+
+Clone the repository and install dependencies:
+
+```sh
+git clone <your-repo-url>
+cd foundry-defi-stablecoin
+forge install
+```
 
 ### Build
 
-```shell
-$ forge build
+```sh
+forge build
 ```
 
 ### Test
 
-```shell
-$ forge test
+```sh
+forge test -vvv
 ```
 
-### Format
+### Directory Details
 
-```shell
-$ forge fmt
+- **src/**: Core smart contracts for the stablecoin and engine logic.
+- **script/**: Deployment and configuration scripts.
+- **test/**: Comprehensive tests, including unit, fuzz, and mock tests.
+- **lib/**: External libraries (OpenZeppelin, Chainlink, forge-std).
+
+### Remappings
+
+Remappings are set in `foundry.toml` for OpenZeppelin and Chainlink contracts:
+
+```toml
+remappings = [
+    "@openzeppelin/contracts=lib/openzeppelin-contracts/contracts",
+    "@chainlink/contracts=lib/chainlink-brownie-contracts/contracts",
+]
 ```
 
-### Gas Snapshots
+## Contributing
 
-```shell
-$ forge snapshot
-```
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
-### Anvil
+## License
 
-```shell
-$ anvil
-```
+[MIT](LICENSE)
 
-### Deploy
+---
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+_Built with [Foundry](https://github.com/foundry-rs/foundry) and inspired by modern DeFi best practices._
