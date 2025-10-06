@@ -56,7 +56,7 @@ contract DSEngineTest is Test {
 
     function testGetTokenAmountFromUsd() external view {
         // Arrange
-        uint256 usdAmountInWei = 10 ether;
+        uint256 usdAmountInWei = 10 * 1e18; // $10
         // ($10e18 * 1e18) / ($2000e8 * 1e10) = 0.005 * 1e18 = 5 * 1e15
         uint256 expectedWeth = 0.005 ether;
 

@@ -208,9 +208,7 @@ contract DSEngine is ReentrancyGuard {
         }
         // A user: $140 ETH, $100 DS
         // debtToCover = $100
-        // $100 of DS = ??? ETH
-        // $2000 / ETH
-        // 0.05 ETH
+        // $100 of DS = ??? ETH, say $2000 / ETH then 0.05 ETH
         uint256 tokenAmountFromDebtCovered = getTokenAmountFromUsd(collateral, debtToCover);
         // 0.05 ETH * 0.1 = 0.005 ETH
         uint256 bonusCollateral = tokenAmountFromDebtCovered * LIQUIDATION_BONUS / LIQUIDATION_PRECISION;
@@ -222,6 +220,7 @@ contract DSEngine is ReentrancyGuard {
         if (endingUserHealthFactor <= startingUserHealthFactor) {
             revert DSEngine__HealthFactorNotImproved();
         }
+        // check liquidator's health factor as well
         _revertIfHealthFactorIsBroken(msg.sender);
     }
 
@@ -319,10 +318,10 @@ contract DSEngine is ReentrancyGuard {
 
     function getTokenAmountFromUsd(address token, uint256 usdAmountInWei) public view returns (uint256) {
         // price of ETH(token)
-        // $ / ETH ETH ?? $2000 / ETH.
+        // $/ETH ETH ?? $2000 / ETH.
         // $1000 = 0.5 ETH
         AggregatorV3Interface priceFeed = AggregatorV3Interface(s_priceFeeds[token]);
-        (, int256 price,,,) = priceFeed.latestRoundData();
+        (, int256 price,,,) = priceFeed.staleCheckLatestRoundData();
 
         // ($10e18 * 1e18) / ($2000e8 * 1e10) = 0.005 * 1e18 = 5 * 1e15
         return (usdAmountInWei * PRECISION / (uint256(price) * ADDITIONAL_FEED_PRECISION));
